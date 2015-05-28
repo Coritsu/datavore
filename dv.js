@@ -8,7 +8,7 @@ var dv = (function() {
  *
  * @namespace The top-level Datavore namespace, <tt>dv</tt>.
  */
-var dv = {version: "1.1.2"};
+var dv = {version: "1.1.3"};
 
 dv.array = function(n) {
     var a = Array(n);
@@ -97,7 +97,7 @@ dv.table = function(input)
 
                 // If type is not numeric, replace null and undefined values with the empty string
                 if (type !== dv.type.numeric && (typeof value === 'undefined' || value === null)) {
-                    value = nullStringValue;
+                    value = null;
                 } else {
                     // Check if the value is a String
                     if (typeof value === 'string') {

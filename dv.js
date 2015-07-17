@@ -8,7 +8,7 @@ var dv = (function() {
  *
  * @namespace The top-level Datavore namespace, <tt>dv</tt>.
  */
-var dv = {version: "1.1.3"};
+var dv = {version: "1.1.4"};
 
 dv.array = function(n) {
     var a = Array(n);
@@ -101,8 +101,11 @@ dv.table = function(input)
                 } else {
                     // Check if the value is a String
                     if (typeof value === 'string') {
+                        if(value === null){
+                            values[j] = value;
+                        }
                         // Check if the value is double-quoted to remove quotes
-                        if (value.charAt(0) === '"' && value.charAt(value.length - 1) === '"') {
+                        else if (value.charAt(0) === '"' && value.charAt(value.length - 1) === '"') {
                             value = value.substring(1, value.length - 1);
                             values[j] = value; // Update item in the array
                         } else {

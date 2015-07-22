@@ -8,7 +8,7 @@ var dv = (function() {
  *
  * @namespace The top-level Datavore namespace, <tt>dv</tt>.
  */
-var dv = {version: "1.1.4"};
+var dv = {version: "1.1.5"};
 
 dv.array = function(n) {
     var a = Array(n);
@@ -484,6 +484,7 @@ outer:
             result[i].index = i;
             result[table[i].name] = result[i];
             if (table[i].lut) { result[i].lut = table[i].lut; }
+            if (table[i].get) { result[i].get = table[i].get; }
         }
         
         // populate result table

@@ -8,7 +8,7 @@ var dv = (function() {
  *
  * @namespace The top-level Datavore namespace, <tt>dv</tt>.
  */
-var dv = {version: "1.1.5"};
+var dv = {version: "1.1.6"};
 
 dv.array = function(n) {
     var a = Array(n);
@@ -502,7 +502,16 @@ outer:
     function code(a) {
         var c = [], d = {}, v;
         for (var i=0, len=a.length; i<len; ++i) {
-            if (d[v = a[i]] === undefined) { d[v] = 1; c.push(v); }
+            // first check if the value is an array
+            // if it is then break it apart and add each unique value
+            var varr = Array.isArray(a[i]) ? a[i] : [a[i]];
+            for(var j = 0; j < varr.length; j++){
+                var v = varr[j];
+                if (d[v] === undefined) {
+                    d[v] = 1;
+                    c.push(v); 
+                }
+            }
         }
         return typeof(c[0]) !== "number" ? c.sort()
             : c.sort(function(a,b) { return a - b; });

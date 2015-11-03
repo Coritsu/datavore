@@ -83,10 +83,9 @@ dv.table = function(input)
 
         type = type || dv.type.unknown;
         compress = (type === dv.type.nominal || type === dv.type.ordinal);
-        vals = values;
+        vals = [];
 
         if (!iscolumn) {
-            vals = [];
 
             // Loop values to normalize them and separate multiple values
             // There is a value for each row (even if 2 rows have the same value)
@@ -108,24 +107,6 @@ dv.table = function(input)
                         else if (value.charAt(0) === '"' && value.charAt(value.length - 1) === '"') {
                             value = value.substring(1, value.length - 1);
                             values[j] = value; // Update item in the array
-                        } else {
-                            // If the value isn't double-quoted, look for multiple values: check if the value has a comma
-                            if (value.indexOf(',') >= 0) {
-                                isMultiple = true; // Update flag for multiple values
-
-                                // If the value has a comma, split it and save it as an array
-                                singleValues = value.split(',');
-
-                                // Trim all values
-                                singleValues = singleValues.map(function (str) {
-                                    return str.trim();
-                                });
-
-                                // Remove the global multiple value and add the obtained single values in the array of values
-                                values = values.slice(0, j).concat(singleValues).concat(values.slice(j + 1));
-                                j   += singleValues.length - 1; // Update counter of the for loop
-                                len += singleValues.length - 1; // Update length  of the for loop
-                            }
                         }
                     }
                 }
@@ -133,11 +114,7 @@ dv.table = function(input)
                 // If the value is not a multiple value, add the row with the value as it is (in the row with index j)
                 // If it is a multiple value, add the array of values
                 // The rows resulting array will be like: [0: 'food', 1: 'dog', 2: ['tree', 'food'], 3: 'food', 4: 'dog']
-                if (!isMultiple) {
-                    rows.push(value);
-                } else {
-                    rows.push(singleValues);
-                }
+                rows.push(value);
             }
 
             // Get the array of possible values. It deletes duplicates, so that each value is present exactly one time.
